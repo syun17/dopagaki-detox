@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  設計書 9.4：自動バックアップで、実行中の Session・PendingChange・ClockAnchor を復元しない
+  （別の端末に復元したときにロックや待機が残らないようにする）。
+  これらは通常の DB とは別の runtime_state.db に保存し、ここで除外する（CLAUDE.md「絶対に守ること」のバックアップの項）。
+-->
+<data-extraction-rules>
+    <cloud-backup>
+        <exclude domain="database" path="runtime_state.db" />
+        <exclude domain="database" path="runtime_state.db-shm" />
+        <exclude domain="database" path="runtime_state.db-wal" />
+        <exclude domain="database" path="runtime_state.db-journal" />
+    </cloud-backup>
+    <device-transfer>
+        <exclude domain="database" path="runtime_state.db" />
+        <exclude domain="database" path="runtime_state.db-shm" />
+        <exclude domain="database" path="runtime_state.db-wal" />
+        <exclude domain="database" path="runtime_state.db-journal" />
+    </device-transfer>
+</data-extraction-rules>

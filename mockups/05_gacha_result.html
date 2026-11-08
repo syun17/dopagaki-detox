@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ガチャ結果（10連） | ドパガキデトックス</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;family=Noto+Sans+JP:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+html,body{margin:0}
+body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#E3E5E1;padding:24px;box-sizing:border-box}
+.phone{border-radius:28px;overflow:hidden;flex-shrink:0;box-shadow:0 2px 6px rgba(0,0,0,.12),0 12px 32px rgba(0,0,0,.10)}
+@media (max-width:460px){body{padding:0;background:#fff;align-items:flex-start}.phone{border-radius:0;box-shadow:none}}
+.opt{display:flex;align-items:center;gap:14px;padding:10px 24px;border-bottom:1px solid #E6E8E4;cursor:pointer;background:#FFFFFF}
+.opt:has(input:checked){background:#EEF6F0}
+.opt input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+.ring{width:20px;height:20px;border-radius:50%;box-sizing:border-box;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:2px solid #72796F}
+.dot{width:10px;height:10px;border-radius:50%;background:transparent}
+.opt input:checked + .ring{border-color:#1E6B45}
+.opt input:checked + .ring .dot{background:#1E6B45}
+.opt input:focus-visible + .ring{outline:2px solid #1E6B45;outline-offset:3px}
+</style>
+</head>
+<body>
+<div class="phone">
+<div style="width: 412px; height: 915px; position: relative; overflow: hidden; background: #FFFFFF; color: #191C1A; font-family: Roboto, 'Noto Sans JP', sans-serif; box-sizing: border-box">
+
+<header style="padding: 40px 24px 16px; display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 14px; font-weight: 500; color: #1E6B45">10連ガチャの結果</span>
+<h1 style="margin: 0; font-size: 28px; line-height: 36px; font-weight: 400">1つ選んでスタート</h1>
+<p style="margin: 0; font-size: 14px; line-height: 20px; color: #5C6159">選ばなかった9つは消えます。</p>
+</header>
+
+<fieldset style="position: absolute; top: 168px; left: 0; right: 0; bottom: 200px; overflow-y: auto; border: 0; margin: 0; padding: 0; border-top: 1px solid #E6E8E4; border-bottom: 1px solid #E6E8E4">
+<legend style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">ミッションを選ぶ</legend>
+<label class="opt">
+<span style="width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; background: #FBE1EC; color: #A8326E">SSR</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0">
+<span style="font-size: 15px; line-height: 22px">好きなゲーム 20分</span>
+<span style="font-size: 13px; line-height: 18px; color: #5C6159">ご褒美 · 追加コインなし · 今日あと1回</span>
+</span>
+<input type="radio" name="pick" value="0" data-title="好きなゲーム 20分" data-min="20">
+<span class="ring" aria-hidden="true"><span class="dot"></span></span>
+</label>
+
+<label class="opt">
+<span style="width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; background: #FCEFC7; color: #7A5600">SR</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0">
+<span style="font-size: 15px; line-height: 22px">英語の長文を読む 40分</span>
+<span style="font-size: 13px; line-height: 18px; color: #5C6159">学習 · 完了で6,000コイン</span>
+</span>
+<input type="radio" name="pick" value="1" data-title="英語の長文を読む 40分" data-min="40">
+<span class="ring" aria-hidden="true"><span class="dot"></span></span>
+</label>
+
+<label class="opt">
+<span style="width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; background: #DCE6FB; color: #2152B8">R</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0">
+<span style="font-size: 15px; line-height: 22px">紙の本を読む 20分</span>
+<span style="font-size: 13px; line-height: 18px; color: #5C6159">読書 · 完了で2,500コイン</span>
+</span>
+<input type="radio" name="pick" value="2" data-title="紙の本を読む 20分" data-min="20" checked>
+<span class="ring" aria-hidden="true"><span class="dot"></span></span>
+</label>
+
+<label class="opt">
+<span style="width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; background: #DCE6FB; color: #2152B8">R</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0">
+<span style="font-size: 15px; line-height: 22px">英単語を覚える 15分</span>
+<span style="font-size: 13px; line-height: 18px; color: #5C6159">学習 · 完了で1,875コイン</span>
+</span>
+<input type="radio" name="pick" value="3" data-title="英単語を覚える 15分" data-min="15">
+<span class="ring" aria-hidden="true"><span class="dot"></span></span>
+</label>
+
+<label class="opt">
+<span style="width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; background: #DCE6FB; color: #2152B8">R</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0">
+<span style="font-size: 15px; line-height: 22px">スクワットと体幹 15分</span>
+<span style="font-size: 13px; line-height: 18px; color: #5C6159">運動 · 完了で1,875コイン</span>
+</span>
+<input type="radio" name="pick" value="4" data-title="スクワットと体幹 15分" data-min="15">
+<span class="ring" aria-hidden="true"><span class="dot"></span></span>
+</label>
+
+<label class="opt">
+<span style="width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; background: #E6E8E4; color: #42493F">N</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0">
+<span style="font-size: 15px; line-height: 22px">肩と首のストレッチ 10分</span>
+<span style="font-size: 13px; line-height: 18px; color: #5C6159">運動 · 完了で1,000コイン</span>
+</span>
+<input type="radio" name="pick" value="5" data-title="肩と首のストレッチ 10分" data-min="10">
+<span class="ring" aria-hidden="true"><span class="dot"></span></span>
+</label>
+
+<label class="opt">
+<span style="width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; background: #E6E8E4; color: #42493F">N</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0">
+<span style="font-size: 15px; line-height: 22px">洗い物をする 10分</span>
+<span style="font-size: 13px; line-height: 18px; color: #5C6159">家事 · 完了で1,000コイン</span>
+</span>
+<input type="radio" name="pick" value="6" data-title="洗い物をする 10分" data-min="10">
+<span class="ring" aria-hidden="true"><span class="dot"></span></span>
+</label>
+
+<label class="opt">
+<span style="width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; background: #E6E8E4; color: #42493F">N</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0">
+<span style="font-size: 15px; line-height: 22px">机の上を片付ける 5分</span>
+<span style="font-size: 13px; line-height: 18px; color: #5C6159">家事 · 完了で500コイン</span>
+</span>
+<input type="radio" name="pick" value="7" data-title="机の上を片付ける 5分" data-min="5">
+<span class="ring" aria-hidden="true"><span class="dot"></span></span>
+</label>
+
+<label class="opt">
+<span style="width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; background: #E6E8E4; color: #42493F">N</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0">
+<span style="font-size: 15px; line-height: 22px">深呼吸と瞑想 5分</span>
+<span style="font-size: 13px; line-height: 18px; color: #5C6159">こころ · 完了で500コイン</span>
+</span>
+<input type="radio" name="pick" value="8" data-title="深呼吸と瞑想 5分" data-min="5">
+<span class="ring" aria-hidden="true"><span class="dot"></span></span>
+</label>
+
+<label class="opt">
+<span style="width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; background: #E6E8E4; color: #42493F">N</span>
+<span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0">
+<span style="font-size: 15px; line-height: 22px">外の空気を吸う 5分</span>
+<span style="font-size: 13px; line-height: 18px; color: #5C6159">こころ · 完了で500コイン</span>
+</span>
+<input type="radio" name="pick" value="9" data-title="外の空気を吸う 5分" data-min="5">
+<span class="ring" aria-hidden="true"><span class="dot"></span></span>
+</label>
+</fieldset>
+
+<div style="position: absolute; left: 24px; right: 24px; bottom: 32px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; gap: 12px; align-items: flex-start; background: #F2F4F1; border-radius: 12px; padding: 12px 16px; font-size: 14px; line-height: 20px; color: #42493F">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#42493F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg>
+<span>スタートすると<span id="selMin">20</span>分間、ほかの画面には進めません。キャンセルはできません。</span>
+</div>
+<a href="06_mission_running.html" style="height: 48px; border-radius: 24px; background: #1E6B45; color: #FFFFFF; text-decoration: none; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 500"><span id="selTitle">紙の本を読む 20分</span>でスタート</a>
+</div>
+
+</div>
+</div>
+<script>
+document.querySelectorAll('input[name="pick"]').forEach(function (r) {
+  r.addEventListener('change', function () {
+    document.getElementById('selTitle').textContent = r.dataset.title;
+    document.getElementById('selMin').textContent = r.dataset.min;
+  });
+});
+</script>
+</body>
+</html>

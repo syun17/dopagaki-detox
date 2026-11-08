@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>設定 | ドパガキデトックス</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;family=Noto+Sans+JP:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+html,body{margin:0}
+body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#E3E5E1;padding:24px;box-sizing:border-box}
+.phone{border-radius:28px;overflow:hidden;flex-shrink:0;box-shadow:0 2px 6px rgba(0,0,0,.12),0 12px 32px rgba(0,0,0,.10)}
+@media (max-width:460px){body{padding:0;background:#fff;align-items:flex-start}.phone{border-radius:0;box-shadow:none}}
+.tab{all:unset;cursor:pointer;height:48px;display:flex;align-items:center;justify-content:center;position:relative;font-size:14px;font-weight:500;color:#42493F}
+.tab .bar{position:absolute;bottom:0;width:64px;height:3px;border-radius:3px 3px 0 0;background:transparent}
+.tab[aria-selected="true"]{color:#1E6B45}
+.tab[aria-selected="true"] .bar{background:#1E6B45}
+.tab:focus-visible{outline:2px solid #1E6B45;outline-offset:-2px}
+ul.list{list-style:none;margin:0;padding:0}
+ul.list li{display:flex;align-items:center;gap:16px;min-height:72px;padding:8px 24px 8px 16px;box-sizing:border-box}
+.av{width:40px;height:40px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700}
+.txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.name{font-size:16px;line-height:24px;color:#191C1A}
+.sub{font-size:14px;line-height:20px;color:#5C6159}
+li:has(.sw.item input:not(:checked)) .name{color:#72796F}
+.sw{position:relative;display:block;cursor:pointer}
+.sw input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+.track{display:block;width:52px;height:32px;border-radius:16px;box-sizing:border-box;position:relative;background:#E1E3DF;border:2px solid #72796F;transition:background .15s,border-color .15s}
+.thumb{position:absolute;border-radius:50%;top:6px;left:6px;width:16px;height:16px;background:#72796F;transition:all .15s}
+.sw input:checked + .track{background:#1E6B45;border-color:#1E6B45}
+.sw input:checked + .track .thumb{top:2px;left:22px;width:24px;height:24px;background:#FFFFFF}
+.sw input:focus-visible + .track{outline:2px solid #1E6B45;outline-offset:2px}
+</style>
+</head>
+<body>
+<div class="phone">
+<div style="width: 412px; height: 915px; position: relative; overflow: hidden; background: #FFFFFF; color: #191C1A; font-family: Roboto, 'Noto Sans JP', sans-serif; box-sizing: border-box">
+
+<header style="height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 4px 0 16px">
+<h1 style="margin: 0; font-size: 22px; font-weight: 500">設定</h1>
+<button type="button" id="addBtn" aria-label="やることを追加" style="all: unset; cursor: pointer; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#42493F" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></button>
+</header>
+
+<div role="tablist" aria-label="リストの切り替え" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-bottom: 1px solid #E6E8E4">
+<button type="button" role="tab" class="tab" aria-selected="true" aria-controls="taskList" data-tab="task">やること<span class="bar"></span></button>
+<button type="button" role="tab" class="tab" aria-selected="false" aria-controls="rewardList" data-tab="reward">ご褒美<span class="bar"></span></button>
+</div>
+
+<ul class="list" id="taskList" role="tabpanel">
+<li><span class="av" style="background:#DCE6FB;color:#2152B8">読</span><span class="txt"><span class="name">紙の本を読む</span><span class="sub">読書 · 20分 · R · 出やすさ 4</span></span><label class="sw item"><input type="checkbox" checked aria-label="紙の本を読むを抽選に入れる"><span class="track"><span class="thumb"></span></span></label></li>
+<li><span class="av" style="background:#D7F0DC;color:#146C2E">運</span><span class="txt"><span class="name">肩と首のストレッチ</span><span class="sub">運動 · 10分 · N · 出やすさ 3</span></span><label class="sw item"><input type="checkbox" checked aria-label="肩と首のストレッチを抽選に入れる"><span class="track"><span class="thumb"></span></span></label></li>
+<li><span class="av" style="background:#D7F0DC;color:#146C2E">運</span><span class="txt"><span class="name">スクワットと体幹</span><span class="sub">運動 · 15分 · R · 出やすさ 3</span></span><label class="sw item"><input type="checkbox" checked aria-label="スクワットと体幹を抽選に入れる"><span class="track"><span class="thumb"></span></span></label></li>
+<li><span class="av" style="background:#EEDFF7;color:#7B3A9E">学</span><span class="txt"><span class="name">英単語を覚える</span><span class="sub">学習 · 15分 · R · 出やすさ 2</span></span><label class="sw item"><input type="checkbox" aria-label="英単語を覚えるを抽選に入れる"><span class="track"><span class="thumb"></span></span></label></li>
+<li><span class="av" style="background:#FDE5D2;color:#9A4A0A">家</span><span class="txt"><span class="name">机の上を片付ける</span><span class="sub">家事 · 5分 · N · 出やすさ 2</span></span><label class="sw item"><input type="checkbox" checked aria-label="机の上を片付けるを抽選に入れる"><span class="track"><span class="thumb"></span></span></label></li>
+</ul>
+
+<ul class="list" id="rewardList" role="tabpanel" hidden>
+<li><span class="av" style="background:#FCEFC7;color:#7A5600">褒</span><span class="txt"><span class="name">好きなゲーム</span><span class="sub">20分 · SSR · 対象アプリ2個 · ガチャで1日2回</span></span><label class="sw item"><input type="checkbox" checked aria-label="好きなゲームを抽選に入れる"><span class="track"><span class="thumb"></span></span></label></li>
+<li><span class="av" style="background:#FCEFC7;color:#7A5600">褒</span><span class="txt"><span class="name">SNSを見る</span><span class="sub">10分 · SR · 対象アプリ3個 · ガチャで1日1回</span></span><label class="sw item"><input type="checkbox" checked aria-label="SNSを見るを抽選に入れる"><span class="track"><span class="thumb"></span></span></label></li>
+<li><span class="av" style="background:#FCEFC7;color:#7A5600">褒</span><span class="txt"><span class="name">動画を1本見る</span><span class="sub">15分 · SR · 対象アプリ1個 · ガチャで1日1回</span></span><label class="sw item"><input type="checkbox" checked aria-label="動画を1本見るを抽選に入れる"><span class="track"><span class="thumb"></span></span></label></li>
+</ul>
+
+<h2 style="margin: 0; padding: 16px 16px 8px; font-size: 14px; font-weight: 500; color: #1E6B45; border-top: 1px solid #E6E8E4">ロックの強さ</h2>
+<ul class="list">
+<li><span class="txt"><span class="name">報酬アプリを常にロック</span><span class="sub">報酬が出たときだけ対象アプリを開ける</span></span><label class="sw"><input type="checkbox" checked aria-label="報酬アプリを常にロック"><span class="track"><span class="thumb"></span></span></label></li>
+<li><span class="txt"><span class="name">強制解除を許可</span><span class="sub">押してから10分後に解除される</span></span><label class="sw"><input type="checkbox" checked aria-label="強制解除を許可"><span class="track"><span class="thumb"></span></span></label></li>
+<li><span class="txt"><span class="name">一時停止を許可</span><span class="sub">1回のミッションで1回・最大5分</span></span><label class="sw"><input type="checkbox" checked aria-label="一時停止を許可"><span class="track"><span class="thumb"></span></span></label></li>
+<li><span class="txt"><span class="name">静かな時間帯</span><span class="sub" style="color:#7A5600">9:42 後にオフになります · タップで取り消し</span></span><label class="sw"><input type="checkbox" checked aria-label="静かな時間帯"><span class="track"><span class="thumb"></span></span></label></li>
+</ul>
+
+<nav aria-label="メインメニュー" style="position: absolute; left: 0; right: 0; bottom: 0; height: 80px; background: #F2F4F1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); padding: 12px 0 16px; box-sizing: border-box">
+<a href="01_home.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #42493F; font-size: 12px; font-weight: 500"><span style="width: 64px; height: 32px; border-radius: 16px; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#42493F" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20h-5.5v-6h-5v6H4z"></path></svg></span>ホーム</a>
+<a href="03_swipe.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #42493F; font-size: 12px; font-weight: 500"><span style="width: 64px; height: 32px; border-radius: 16px; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#42493F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="3" width="12" height="18" rx="2.5"></rect><path d="M12 15V9M9.5 11.5 12 9l2.5 2.5"></path></svg></span>スワイプ</a>
+<a href="04_gacha.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #42493F; font-size: 12px; font-weight: 500"><span style="width: 64px; height: 32px; border-radius: 16px; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#42493F" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h6M15 12h6"></path><circle cx="12" cy="12" r="3"></circle></svg></span>ガチャ</a>
+<a href="08_settings.html" aria-current="page" style="display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #191C1A; font-size: 12px; font-weight: 700"><span style="width: 64px; height: 32px; border-radius: 16px; background: #D5E8D9; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F1F15" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1"></path><circle cx="15" cy="6" r="2"></circle><circle cx="9" cy="12" r="2"></circle><circle cx="17" cy="18" r="2"></circle></svg></span>設定</a>
+</nav>
+
+</div>
+</div>
+<script>
+document.querySelectorAll('.tab').forEach(function (t) {
+  t.addEventListener('click', function () {
+    var isTask = t.dataset.tab === 'task';
+    document.querySelectorAll('.tab').forEach(function (x) { x.setAttribute('aria-selected', String(x === t)); });
+    document.getElementById('taskList').hidden = !isTask;
+    document.getElementById('rewardList').hidden = isTask;
+    document.getElementById('addBtn').setAttribute('aria-label', isTask ? 'やることを追加' : 'ご褒美を追加');
+  });
+});
+</script>
+</body>
+</html>

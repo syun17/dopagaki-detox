@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Android 11 以前の自動バックアップ。data_extraction_rules.xml と同じものを除外する。 -->
+<full-backup-content>
+    <exclude domain="database" path="runtime_state.db" />
+    <exclude domain="database" path="runtime_state.db-shm" />
+    <exclude domain="database" path="runtime_state.db-wal" />
+    <exclude domain="database" path="runtime_state.db-journal" />
+</full-backup-content>

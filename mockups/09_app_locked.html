@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>報酬アプリのロック画面 | ドパガキデトックス</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;family=Noto+Sans+JP:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<style>
+html,body{margin:0}
+body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#E3E5E1;padding:24px;box-sizing:border-box}
+.phone{border-radius:28px;overflow:hidden;flex-shrink:0;box-shadow:0 2px 6px rgba(0,0,0,.12),0 12px 32px rgba(0,0,0,.10)}
+@media (max-width:460px){body{padding:0;background:#fff;align-items:flex-start}.phone{border-radius:0;box-shadow:none}}
+[hidden]{display:none !important}
+</style>
+</head>
+<body>
+<div class="phone">
+<div style="width: 412px; height: 915px; position: relative; overflow: hidden; background: #FFFFFF; color: #191C1A; font-family: Roboto, 'Noto Sans JP', sans-serif; box-sizing: border-box; display: flex; flex-direction: column; align-items: center">
+
+<div style="margin-top: 140px; position: relative; width: 72px; height: 72px">
+<span style="width: 72px; height: 72px; border-radius: 20px; background: #FCEFC7; display: flex; align-items: center; justify-content: center"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#7A5600" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="7" width="19" height="11" rx="5"></rect><path d="M7 11v3M5.5 12.5h3M15.5 11.5h.01M18 13.5h.01"></path></svg></span>
+<span style="position: absolute; right: -8px; bottom: -8px; width: 32px; height: 32px; border-radius: 50%; background: #1E6B45; border: 3px solid #FFFFFF; box-sizing: border-box; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg></span>
+</div>
+
+<h1 style="margin: 32px 0 0; font-size: 28px; line-height: 36px; font-weight: 400">ゲームAはロック中です</h1>
+<p style="margin: 12px 40px 0; text-align: center; font-size: 16px; line-height: 24px; color: #42493F">このアプリはドパガキデトックスで報酬が出たときだけ使えます。やることを終えてコインを貯め、ガチャを回そう。</p>
+
+<div style="margin-top: 24px; display: flex; gap: 8px">
+<span style="height: 32px; display: inline-flex; align-items: center; padding: 0 12px; border: 1px solid #C2C9BD; border-radius: 8px; font-size: 14px; font-weight: 500">所持コイン 8,400</span>
+<span style="height: 32px; display: inline-flex; align-items: center; padding: 0 12px; border: 1px solid #C2C9BD; border-radius: 8px; font-size: 14px; font-weight: 500">今日の報酬 あと1回</span>
+</div>
+
+<section id="waitDialog" role="alertdialog" aria-label="本当に解除しますか？" hidden style="margin: 32px 24px 0; align-self: stretch; background: #F7F8F6; border-radius: 28px; padding: 24px; display: flex; flex-direction: column; gap: 12px">
+<h2 style="margin: 0; font-size: 22px; line-height: 28px; font-weight: 400">本当に解除しますか？</h2>
+<div style="display: flex; align-items: baseline; gap: 8px"><span style="font-size: 14px; color: #42493F">解除まで</span><span style="font-size: 36px; line-height: 44px; font-variant-numeric: tabular-nums">9:42</span></div>
+<p style="margin: 0; font-size: 14px; line-height: 20px; color: #42493F">10分たつと、ゲームAが30分だけ使えるようになります。そのあとは、またロックされます。</p>
+<div style="display: flex; justify-content: flex-end; gap: 8px">
+<button type="button" style="all: unset; cursor: pointer; height: 40px; padding: 0 12px; border-radius: 20px; display: flex; align-items: center; color: #1E6B45; font-size: 14px; font-weight: 500">このまま待つ</button>
+<button type="button" id="cancelBtn" style="all: unset; cursor: pointer; height: 40px; padding: 0 24px; border-radius: 20px; display: flex; align-items: center; background: #1E6B45; color: #FFFFFF; font-size: 14px; font-weight: 500">やめる</button>
+</div>
+</section>
+
+<div style="position: absolute; left: 24px; right: 24px; bottom: 32px; display: flex; flex-direction: column; gap: 8px">
+<a href="01_home.html" style="height: 48px; border-radius: 24px; background: #1E6B45; color: #FFFFFF; text-decoration: none; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 500">ドパガキデトックスを開く</a>
+<button type="button" id="requestBtn" style="all: unset; cursor: pointer; box-sizing: border-box; width: 100%; height: 48px; border-radius: 24px; display: flex; align-items: center; justify-content: center; color: #1E6B45; font-size: 15px; font-weight: 500">強制解除（押してから10分後）</button>
+</div>
+
+</div>
+</div>
+<script>
+var dialog = document.getElementById('waitDialog');
+var requestBtn = document.getElementById('requestBtn');
+requestBtn.addEventListener('click', function () { dialog.hidden = false; requestBtn.hidden = true; });
+document.getElementById('cancelBtn').addEventListener('click', function () { dialog.hidden = true; requestBtn.hidden = false; requestBtn.focus(); });
+</script>
+</body>
+</html>

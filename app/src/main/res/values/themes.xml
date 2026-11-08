@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      起動直後（Compose が描く前）のウィンドウ。背景を docs/design-system.md 2章の background（#FFFFFF）に合わせ、
+      Compose の面へ切り替わるときの色の差をなくす。画面の色は Compose の DetoxTheme で決める。
+    -->
+    <style name="Theme.Dopagaki" parent="@android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@android:color/white</item>
+    </style>
+</resources>
