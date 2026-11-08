@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  設計書 9.3：画面の内容は読まない（canRetrieveWindowContent=false）、ユーザー補助ツールではない（isAccessibilityTool=false）、
+  受け取るイベントはウィンドウの切り替え（TYPE_WINDOW_STATE_CHANGED）だけ。使い方を変えたら Play Console の申告を出し直す（9.2）。
+-->
+<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:accessibilityEventTypes="typeWindowStateChanged"
+    android:accessibilityFeedbackType="feedbackGeneric"
+    android:accessibilityFlags="flagDefault"
+    android:canRetrieveWindowContent="false"
+    android:description="@string/a11y_service_description"
+    android:isAccessibilityTool="false"
+    android:notificationTimeout="100"
+    android:summary="@string/a11y_service_summary" />

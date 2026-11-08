@@ -138,6 +138,9 @@ object PendingChanges {
 
     fun cancel(change: PendingChange): PendingChange = change.copy(status = PendingStatus.CANCELLED)
 
+    /** 利用者が取り消せるか。消したご褒美の対象アプリのロックを外す待ちは取り消せない（5.6）。 */
+    fun isCancellable(change: PendingChange): Boolean = change.payload !is PendingPayload.UnlockApps
+
     /** 反映する時刻になった待ち（古い順）。 */
     fun due(changes: List<PendingChange>, now: Instant): List<PendingChange> =
         changes.filter { it.status == PendingStatus.WAITING && it.appliesAt <= now }.sortedBy { it.appliesAt }

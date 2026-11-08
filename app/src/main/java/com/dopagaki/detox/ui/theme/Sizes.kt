@@ -31,6 +31,16 @@ data class DetoxSizes(
     /** スワイプの右側アクション：「これにする」（FAB）と「あとで」の丸。 */
     val swipeFab: Dp = 56.dp,
     val swipeSecondaryAction: Dp = 48.dp,
+    /** スワイプの大きなアイコンの白い丸（仮決定 N7）。 */
+    val swipeHeroCircle: Dp = 220.dp,
+    /** ガチャマシンの絵（仮決定 N7）。 */
+    val gachaMachineWidth: Dp = 240.dp,
+    val gachaMachineHeight: Dp = 270.dp,
+    /** ロック画面のアプリのタイル、タイルの中のアイコン、ロックのバッジとその縁（仮決定 N7）。 */
+    val lockTile: Dp = 72.dp,
+    val lockTileIcon: Dp = 36.dp,
+    val lockBadge: Dp = 32.dp,
+    val lockBadgeBorder: Dp = 2.dp,
     /** 区切り線の太さ。 */
     val divider: Dp = 1.dp,
 )

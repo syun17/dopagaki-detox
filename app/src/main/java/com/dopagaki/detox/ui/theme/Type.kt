@@ -34,6 +34,14 @@ data class DetoxTextStyles(
         lineHeight = 18.sp,
     ),
 
+    /** スワイプの説明（15sp／22sp・400）。2〜3行に折り返すので行間を広げる（仮決定 U9）。 */
+    val swipeBody: TextStyle = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Normal,
+        fontSize = 15.sp,
+        lineHeight = 22.sp,
+    ),
+
     // 等幅数字（tnum）のスタイル。残り時間とコインの表示に使う（docs/design-system.md 3章）
     /** 実行中の残り時間「12:34」、スワイプの「15分」（displayLarge＋tnum）。 */
     val timerLarge: TextStyle = DetoxTypography.displayLarge.copy(fontFeatureSettings = TABULAR_NUMS),
@@ -41,6 +49,8 @@ data class DetoxTextStyles(
     val timerMedium: TextStyle = DetoxTypography.displayMedium.copy(fontFeatureSettings = TABULAR_NUMS),
     /** ロック画面の解除待ち「9:42」（displaySmall＋tnum）。 */
     val timerSmall: TextStyle = DetoxTypography.displaySmall.copy(fontFeatureSettings = TABULAR_NUMS),
+    /** 本文サイズで秒が変わる数字（反映待ち、一時停止の残り、ホーム末尾。bodyMedium＋tnum。仮決定 N6）。 */
+    val timerInline: TextStyle = DetoxTypography.bodyMedium.copy(fontFeatureSettings = TABULAR_NUMS),
     /** チップ・トップバーのコイン「8,400コイン」（labelLarge＋tnum）。 */
     val coinLabel: TextStyle = DetoxTypography.labelLarge.copy(fontFeatureSettings = TABULAR_NUMS),
     /** タイムラインの最下段のコイン「12,000コイン」（timelineMeta＋tnum）。 */

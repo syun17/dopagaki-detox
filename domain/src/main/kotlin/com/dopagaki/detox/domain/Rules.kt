@@ -104,6 +104,12 @@ object Rules {
     const val TIME_TAG_DAY_START_HOUR = 11
     const val TIME_TAG_NIGHT_START_HOUR = 18
 
+    /** 設定で選べる範囲：ホーム・スワイプのご褒美の1日の回数、1日の目標（分）とその刻み、ミッションの時間の刻み（分）。5.5 */
+    val FEED_REWARD_DAILY_LIMIT_RANGE = 0..3
+    val DAILY_GOAL_MIN_RANGE = 10..120
+    const val DAILY_GOAL_STEP_MIN = 10
+    const val DURATION_STEP_MIN = 5
+
     /** 1日の切り替えの最小間隔（前回から20時間以上あける）。6.4 */
     val DAY_SWITCH_MIN_INTERVAL: Duration = Duration.ofHours(20)
 

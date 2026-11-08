@@ -7,7 +7,10 @@ import com.dopagaki.detox.data.db.MainDatabase
 import com.dopagaki.detox.data.db.RuntimeDatabase
 import com.dopagaki.detox.data.prefs.PrefsStore
 import com.dopagaki.detox.domain.Rules
+import com.dopagaki.detox.notification.Notifier
 import com.dopagaki.detox.time.AndroidTrustedClock
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -38,19 +41,27 @@ class AppContainer(context: Context) {
     val clock = AndroidTrustedClock(appContext, runtimeDb.dao())
     val store = DetoxStore(mainDb.dao(), runtimeDb.dao(), PrefsStore(appContext), clock)
 
+    val notifier = Notifier(appContext)
+
     /** 信頼時刻と状態の読み込みが終わったら完了する。 */
     val ready = CompletableDeferred<Unit>()
 
-    /** 状態が変わるたびに呼ばれる処理（通知・アラームの更新など）。 */
-    private val listeners = mutableListOf<suspend () -> Unit>()
-
-    fun addListener(l: suspend () -> Unit) { listeners += l }
+    fun refreshNotifications() {
+        notifier.update(store.state.value, clock.now())
+    }
 
     fun start() {
         scope.launch {
             clock.initialize()
             store.load()
             ready.complete(Unit)
+            // 実行中・10分待ちが変わったら通知とアラームを更新する
+            launch {
+                store.state
+                    .map { Triple(it.running, it.waiting, it.settings) }
+                    .distinctUntilChanged()
+                    .collect { refreshNotifications() }
+            }
             var lastCheckpoint = 0L
             var ticks = 0L
             while (isActive) {
@@ -66,11 +77,8 @@ class AppContainer(context: Context) {
         }
     }
 
-    /** 操作のあとに呼ぶ。信頼時刻を保存し、通知などを更新する。 */
+    /** 操作のあとに呼ぶ。信頼時刻を保存する（6.4「操作のたびに保存」）。 */
     fun afterAction() {
-        scope.launch {
-            clock.checkpoint()
-            listeners.forEach { it() }
-        }
+        scope.launch { clock.checkpoint() }
     }
 }

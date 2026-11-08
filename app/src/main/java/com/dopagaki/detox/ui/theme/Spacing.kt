@@ -7,6 +7,8 @@ import androidx.compose.ui.unit.dp
 /** 余白の段階（docs/design-system.md「4. 余白とレイアウト」）。段階の外の値を使わない。 */
 @Immutable
 data class DetoxSpacing(
+    /** 0（部品の既定の隙間を消すとき）。 */
+    val none: Dp = 0.dp,
     val xs: Dp = 4.dp,
     val sm: Dp = 8.dp,
     val md: Dp = 12.dp,

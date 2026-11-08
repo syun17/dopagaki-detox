@@ -72,14 +72,14 @@ SNS やゲームを開く「手グセ」を、ショート動画風スワイプ�
     Rarity.kt, Category.kt
     （コインの倍率は整数の百分率 rarityMultiplierPercent。コイン = 単価 × 分 × 倍率% / 100）
     time/TrustedClock.kt  信頼時刻のインターフェース
-    （これから）lottery/ coin/ pity/ refresh/ pending/ session/ day/
+    model/ day/ coin/ lottery/ pity/ refresh/ quiet/ pending/ session/ lock/ time/ preset/
   domain/src/test/...   FakeTrustedClock、テスト
 :app      Android アプリ（com.dopagaki.detox、minSdk 29・targetSdk 36・compileSdk 36）
   app/src/main/java/com/dopagaki/detox/
     MainActivity.kt
     ui/theme/           テーマ（Color, Type, Shape, Spacing, Sizes, Theme）。値は docs/design-system.md
-    （これから）navigation/  ui/<画面>/  data/（Room・DataStore）  time/（TrustedClock の実装）
-              lock/（AccessibilityService とロック画面）  notification/
+    navigation/  ui/<画面>/ ui/components/  data/（Room・DataStore・DetoxStore）  time/（AndroidTrustedClock）
+    lock/（AccessibilityService とロック画面）  notification/（通知・アラーム・再起動）
 ```
 画面 ID とパッケージ・mockup の対応は `/implement-screen` の skill にある。
 

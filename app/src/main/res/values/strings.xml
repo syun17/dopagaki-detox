@@ -1,4 +1,331 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ドパガキデトックス</string>
+
+    <!-- ユーザー補助サービス（設計書 9.2、9.3）。端末のユーザー補助の設定に表示される -->
+    <string name="a11y_service_label">ドパガキデトックスのアプリのロック</string>
+    <string name="a11y_service_summary">ご褒美に選んだアプリを、ご褒美ミッションの間だけ開けるようにします</string>
+    <string name="a11y_service_description">ご褒美に選んだアプリが前面に来たときにロック画面を重ね、ご褒美の時間が終わったら端末のホーム画面に戻すため、前面にあるアプリのパッケージ名だけを使います。画面の内容は読みません。データは端末の外に送りません。</string>
+
+    <!-- 通知（6.2、6.3、9.4） -->
+    <string name="channel_ongoing">残り時間</string>
+    <string name="channel_alert">ミッションの終了</string>
+    <string name="notif_running_title">%1$s</string>
+    <string name="notif_running_text">ミッション中</string>
+    <string name="notif_paused">一時停止中</string>
+    <string name="notif_unlock_title">強制解除の待機中</string>
+    <string name="notif_unlock_text">アプリを開くと取り消せます</string>
+    <string name="notif_end_title">ミッションの時間が終わりました</string>
+    <string name="notif_end_text">アプリを開いて結果を報告しましょう</string>
+    <string name="notif_reward_soon_title">あと1分で終わります</string>
+    <string name="notif_reward_soon_text">時間が来るとアプリはロックに戻ります</string>
+
+    <!-- 共通 -->
+    <string name="tab_home">ホーム</string>
+    <string name="tab_swipe">スワイプ</string>
+    <string name="tab_gacha">ガチャ</string>
+    <string name="tab_settings">設定</string>
+    <string name="start">始める</string>
+    <string name="save">保存</string>
+    <string name="cancel">キャンセル</string>
+    <string name="close">閉じる</string>
+    <string name="delete">削除</string>
+    <string name="back">戻る</string>
+    <string name="next">次へ</string>
+    <string name="ok">OK</string>
+    <string name="on">オン</string>
+    <string name="off">オフ</string>
+    <string name="not_now">今はしない</string>
+    <string name="coins">%1$sコイン</string>
+    <string name="minutes">%1$d分</string>
+    <string name="minute_unit">分</string>
+    <string name="times">%1$d回</string>
+    <string name="percent">%1$d%%</string>
+    <string name="dot_join">%1$s · %2$s</string>
+    <string name="title_minutes">%1$s %2$d分</string>
+    <string name="time_range">%1$s〜%2$s</string>
+    <string name="rarity_label">レア度 %1$s</string>
+    <string name="day_today">今日</string>
+    <string name="day_yesterday">昨日</string>
+    <string name="day_n_ago">%1$d日前</string>
+    <string name="week_one_ago">1週間前</string>
+    <string name="week_n_ago">%1$d週間前</string>
+    <string name="last_done">最後は%1$s</string>
+
+    <!-- カテゴリ -->
+    <string name="category_reading">読書</string>
+    <string name="category_exercise">運動</string>
+    <string name="category_study">学習</string>
+    <string name="category_chores">家事</string>
+    <string name="category_mind">こころ</string>
+    <string name="category_reward">ご褒美</string>
+    <string name="category_game">ゲーム</string>
+    <string name="category_sns">SNS</string>
+    <string name="category_letter_reading">読</string>
+    <string name="category_letter_exercise">運</string>
+    <string name="category_letter_study">学</string>
+    <string name="category_letter_chores">家</string>
+    <string name="category_letter_mind">心</string>
+    <string name="category_letter_reward">褒</string>
+
+    <!-- コインと始められない理由 -->
+    <string name="coin_on_done">完了で%1$sコイン</string>
+    <string name="coin_to_start">始めるのに%1$sコイン</string>
+    <string name="coin_no_extra">追加コインなし</string>
+    <string name="reason_coins">あと%1$sコイン · やることを完了するとコインが増えます</string>
+    <string name="reason_coins_short">あと%1$sコイン</string>
+    <string name="reason_feed_slot">今日の枠は使い切りました · 朝4時にまた使えます</string>
+    <string name="reason_quiet">静かな時間帯（%1$s〜%2$s）はご褒美を始められません</string>
+    <string name="reason_after_reward">直前がご褒美なので、次はやることを1つ始めてください</string>
+    <string name="reason_disabled">このミッションは今は抽選に入っていません</string>
+    <string name="reason_short_feed_slot">今日の枠は使い切りました</string>
+    <string name="reason_short_quiet">静かな時間帯です</string>
+    <string name="reason_short_after_reward">次はやることから</string>
+    <string name="reason_short_disabled">抽選に入っていません</string>
+
+    <!-- S01 ホーム -->
+    <string name="home_a11y_off">ユーザー補助がオフのため、報酬アプリのロックが止まっています。タップしてオンに戻せます。</string>
+    <string name="home_empty_title">おすすめできるミッションがありません</string>
+    <string name="home_empty_body">設定でやることを有効にすると、ここに並びます。</string>
+    <string name="home_empty_action">設定を開く</string>
+    <string name="home_open_detail">詳細を開く</string>
+    <string name="home_meta_count">これまで%1$d回</string>
+    <string name="home_meta_reward">%1$s · 今日あと%2$d回</string>
+    <string name="home_pull_to_refresh">引っ張って更新 · あと%1$d回（1時間に3回まで）</string>
+    <string name="home_next_refresh">次の更新まで %1$s</string>
+
+    <!-- S01-2 詳細 -->
+    <string name="lock_notice_task">始めると%1$d分間、ほかの画面には進めません。早く終わっても%1$d分たつまで続きます。</string>
+    <string name="lock_notice_reward">始めると%1$sコインを使い、%2$d分間ほかの画面には進めません。</string>
+    <string name="lock_notice_reward_apps">この間だけ%1$sを開けます。</string>
+
+    <!-- S02 スワイプ -->
+    <string name="swipe_page">%1$d / %2$d · 更新あと%3$d回</string>
+    <string name="swipe_pick">これにする</string>
+    <string name="swipe_later">あとで</string>
+    <string name="swipe_later_saved">保存済み</string>
+    <string name="swipe_saved">「あとで」に保存しました。ホームの先頭に並びます。</string>
+    <string name="swipe_unsaved">「あとで」から外しました</string>
+    <string name="swipe_next">上にスワイプで次へ</string>
+    <string name="swipe_next_refresh_label">次の更新まで</string>
+    <string name="swipe_limit_body">更新は1時間に3回までです。今のおすすめは、下にスワイプするかホームで見られます。</string>
+
+    <!-- S03 ガチャ -->
+    <string name="gacha_single">単発 · %1$sコイン</string>
+    <string name="gacha_ten">10連 · %1$sコイン</string>
+    <string name="gacha_single_caption">出たらすぐスタート</string>
+    <string name="gacha_ten_caption">10個から1つ選べる</string>
+    <string name="gacha_no_candidates">引けるミッションがありません。設定でやることを有効にしてください。</string>
+    <string name="gacha_no_coins">やることを完了するとコインが増えます。ホームとスワイプのやることはコインなしで始められます。</string>
+    <string name="gacha_rates">出現率</string>
+    <string name="gacha_show_missions">中身を見る</string>
+    <string name="gacha_rates_note">ガチャで出たご褒美は追加のコインなしで始められます。ホームとスワイプのご褒美はこの10分の1の確率で、始めるのにコインが必要です。引いた結果は取り消せません。</string>
+    <string name="gacha_skip">タップで結果へ</string>
+    <string name="gacha_single_result">単発ガチャの結果</string>
+    <string name="gacha_start">スタート</string>
+    <string name="gacha_start_notice">スタートすると%1$d分間、ほかの画面には進めません。キャンセルはできません。</string>
+    <string name="gacha_ten_result">10連ガチャの結果</string>
+    <string name="gacha_ten_title">1つ選んでスタート</string>
+    <string name="gacha_ten_support">選ばなかった9つは消えます。</string>
+    <string name="gacha_ten_quiet">ご褒美 · 静かな時間帯は選べません</string>
+    <string name="gacha_ten_reward_support">ご褒美 · 追加コインなし · 今日あと%1$d回</string>
+    <string name="gacha_ten_disabled">今は選べません</string>
+    <string name="gacha_ten_start">%1$s %2$d分でスタート</string>
+    <string name="gacha_ten_choose">選べるミッションを1つ選んでください</string>
+    <string name="no_reward_quiet">今はご褒美が出ません。静かな時間帯（%1$s〜%2$s）です。</string>
+    <string name="no_reward_after_reward">今はご褒美が出ません。直前がご褒美だったので、次はやることだけが出ます。</string>
+    <string name="no_reward_daily_limit">今はご褒美が出ません。ガチャのご褒美は今日の上限に達しました。朝4時に戻ります。</string>
+    <string name="no_reward_none">今はご褒美が出ません。有効なご褒美がありません。設定で追加できます。</string>
+    <string name="no_reward_pity_carry">ご褒美確定は、次に出せるときまで持ち越します。</string>
+    <string name="pity_remaining">ご褒美確定まで あと%1$d回</string>
+    <string name="pity_ready">次のガチャはご褒美確定</string>
+    <string name="pity_fraction">%1$d / %2$d</string>
+    <string name="pity_note">15分以上のやることを5回続けて『できた』で終えると、次はご褒美確定</string>
+    <string name="pity_ready_note">10連では10件のうち少なくとも1件がご褒美になります</string>
+
+    <!-- S05 実行中 -->
+    <string name="running_locked">ロック中 · 終わるまでほかの画面には進めません</string>
+    <string name="running_remaining">残り</string>
+    <string name="running_paused">一時停止中</string>
+    <string name="running_remaining_desc">残り%1$d分%2$d秒</string>
+    <string name="running_ends_at">%1$s に終了</string>
+    <string name="running_resume_in">あと%1$sで再開</string>
+    <string name="running_task_coins">終わると%1$sコインもらえます。</string>
+    <string name="running_reward_apps">この%1$d分だけ、%2$sを開けます。</string>
+    <string name="running_reward_no_apps">対象アプリが設定されていません。終わったあとに、設定のご褒美で選べます。</string>
+    <string name="running_exercise_note">つらいときは休んでOK。終わったら『一部できた』で報告</string>
+    <string name="running_open_app">%1$sを開く</string>
+    <string name="running_open_apps">対象アプリを開く</string>
+    <string name="running_paused_apps">一時停止中は開けません</string>
+    <string name="running_pause">一時停止（あと1回 · 最大5分）</string>
+    <string name="running_pause_used">一時停止（使い切りました）</string>
+    <string name="running_resume">再開</string>
+    <string name="running_no_notifications">通知が許可されていないため、終了1分前のお知らせは届きません。</string>
+    <string name="force_unlock">強制解除</string>
+    <string name="force_unlock_caption_task">押してから10分後に解除されます · コインはもらえません\n残り10分を切るとこのボタンは消えます</string>
+    <string name="force_unlock_caption_reward">押してから10分後に解除されます · 使ったコインは戻りません\n残り10分を切るとこのボタンは消えます</string>
+
+    <!-- S05-2 解除待ち -->
+    <string name="unlock_title">本当に解除しますか？</string>
+    <string name="unlock_until">解除まで</string>
+    <string name="unlock_body_task">10分たつとロックが外れ、「%1$s」は中断になります。このミッションのコインはもらえません。</string>
+    <string name="unlock_body_reward">10分たつとロックが外れ、「%1$s」は中断になります。使ったコインは戻りません。</string>
+    <string name="unlock_body_reward_apps">%1$sもロックに戻ります。</string>
+    <string name="unlock_body_timer">待っている間もミッションのタイマーは進みます。</string>
+    <string name="unlock_back_to_mission">ミッションに戻る</string>
+
+    <!-- S06 完了報告 -->
+    <string name="report_eyebrow">%1$d分たちました</string>
+    <string name="report_question">どこまでできましたか？</string>
+    <string name="report_submit">報告</string>
+    <string name="result_done">できた</string>
+    <string name="result_partial">一部できた</string>
+    <string name="result_failed">できなかった</string>
+    <string name="report_partial_support">%1$sコイン · 途中まででも記録に残ります</string>
+    <string name="report_failed_support">コインは0です。今あるコインは減りません</string>
+    <string name="settle_recorded">記録しました</string>
+    <string name="settle_plus_coins">+%1$sコイン</string>
+    <string name="settle_cheer_done">最後までやり切りました。</string>
+    <string name="settle_cheer_partial">途中まででも、記録に残りました。</string>
+    <string name="settle_cheer_failed">また次の1回で。コインは減っていません。</string>
+    <string name="settle_line_mission">%1$s（%2$s）</string>
+    <string name="settle_line_streak">連続%1$d日目のボーナス</string>
+    <string name="settle_line_balance">所持コイン</string>
+    <string name="settle_pity_reset">ご褒美確定までのカウントは0に戻りました。</string>
+    <string name="settle_reward">ご褒美の時間が終わりました</string>
+    <string name="settle_reward_body">次の1回は、やることから選ばれます。</string>
+    <string name="settle_reward_apps">%1$sはロックに戻りました。</string>
+    <string name="settle_aborted">強制解除しました</string>
+    <string name="settle_aborted_body">中断として記録しました。このミッションのコインは0です。連続日数はそのままです。</string>
+    <string name="settle_home">ホームへ</string>
+
+    <!-- S04 設定 -->
+    <string name="settings_add_task">やることを追加</string>
+    <string name="settings_add_reward">ご褒美を追加</string>
+    <string name="settings_pending">反映待ち</string>
+    <string name="settings_pending_time">反映待ち %1$s</string>
+    <string name="settings_pending_cancel">取り消し</string>
+    <string name="settings_wait_snackbar">10分後に反映します。設定の上部で取り消せます。</string>
+    <string name="settings_tab_tasks">やること</string>
+    <string name="settings_tab_rewards">ご褒美</string>
+    <string name="settings_empty_tasks">やることがありません</string>
+    <string name="settings_empty_tasks_body">右上の＋から追加できます。</string>
+    <string name="settings_empty_rewards">ご褒美がありません</string>
+    <string name="settings_empty_rewards_body">ゲームやSNSを時間つきで登録すると、ガチャで出るようになります。</string>
+    <string name="settings_row_task">%1$s · %2$d分 · %3$s · 出やすさ %4$d</string>
+    <string name="settings_row_reward">%1$d分 · %2$s · 対象アプリ%3$d個 · ガチャで1日%4$d回</string>
+    <string name="settings_row_pending_off">%1$s 後にオフになります</string>
+    <string name="settings_lock_section">ロックの強さ</string>
+    <string name="settings_reward_lock">報酬アプリを常にロック</string>
+    <string name="settings_reward_lock_support">報酬が出たときだけ対象アプリを開ける</string>
+    <string name="settings_reward_lock_off">ユーザー補助がオフのため動いていません</string>
+    <string name="settings_allow_unlock">強制解除を許可</string>
+    <string name="settings_allow_unlock_support">押してから10分後に解除される</string>
+    <string name="settings_allow_pause">一時停止を許可</string>
+    <string name="settings_allow_pause_support">1回のミッションで1回・最大5分</string>
+    <string name="settings_feed_limit">ホーム・スワイプのご褒美</string>
+    <string name="settings_feed_limit_support">ホーム・スワイプ・あとでから始められるご褒美の1日の回数</string>
+    <string name="settings_quiet_section">静かな時間帯</string>
+    <string name="settings_quiet">静かな時間帯</string>
+    <string name="settings_quiet_support">この時間はご褒美を出さず、始められません</string>
+    <string name="settings_quiet_start">開始</string>
+    <string name="settings_quiet_end">終了</string>
+    <string name="settings_goal_section">目標</string>
+    <string name="settings_goal">1日の目標 %1$d分</string>
+    <string name="settings_a11y_section">ユーザー補助と通知</string>
+    <string name="settings_disclosure">ユーザー補助の説明</string>
+    <string name="settings_notifications">通知</string>
+    <string name="settings_notifications_off">許可されていません · 残り時間が通知に出ません</string>
+    <string name="settings_data_section">データ</string>
+    <string name="settings_backup">バックアップ</string>
+    <string name="settings_backup_support">端末の自動バックアップで、ミッションと記録を保存します。実行中のミッションと反映待ちの変更は保存しません。</string>
+    <string name="settings_reset">データをリセット</string>
+    <string name="settings_reset_support">ミッション・履歴・コイン・設定を初めの状態に戻します。押してから10分後に反映します。</string>
+    <string name="settings_help">ヘルプ</string>
+    <string name="help_body">ゲームやSNSの利用で日常生活に大きな支障が出ている場合は、アプリだけに頼らず、医療機関や相談窓口の利用も選択肢です。このアプリは習慣づくりを支えるためのもので、治療を目的としたものではありません。</string>
+    <string name="reset_title">データをリセットしますか？</string>
+    <string name="reset_body">10分後に、ミッション・履歴・コイン・設定が初めの状態に戻ります。初回ボーナスはもう一度はもらえません。待っている間は、設定の上部から取り消せます。</string>
+    <string name="reset_confirm">リセット</string>
+    <string name="pending_setting">%1$s：%2$s</string>
+    <string name="pending_mission">%1$s：%2$s</string>
+    <string name="pending_enable">有効にする</string>
+    <string name="pending_disable">無効にする</string>
+    <string name="pending_duration">時間 %1$d分</string>
+    <string name="pending_weight">出やすさ %1$d</string>
+    <string name="pending_daily_limit">1日の上限 %1$d回</string>
+    <string name="pending_rarity">レア度 %1$s</string>
+    <string name="pending_remove_apps">%1$sのロックを外す</string>
+    <string name="pending_delete">%1$sを削除</string>
+    <string name="pending_unlock_apps">%1$sのロックを外す</string>
+    <string name="pending_reset">データのリセット</string>
+    <string name="pending_app_lock_unlock">報酬アプリのロックの強制解除</string>
+
+    <!-- 編集 -->
+    <string name="edit_add_task">やることを追加</string>
+    <string name="edit_edit_task">やることを編集</string>
+    <string name="edit_add_reward">ご褒美を追加</string>
+    <string name="edit_edit_reward">ご褒美を編集</string>
+    <string name="edit_name">名前</string>
+    <string name="edit_category">カテゴリ</string>
+    <string name="edit_duration">時間 %1$d分</string>
+    <string name="edit_rarity">レア度</string>
+    <string name="edit_rarity_wait">時間から決まるのは %1$s です。高くした分は10分後に反映します。</string>
+    <string name="edit_weight">出やすさ</string>
+    <string name="edit_weight_hint">大きいほど出やすくなります</string>
+    <string name="edit_note">ひとこと（なくてもかまいません）</string>
+    <string name="edit_time_tags">時間帯</string>
+    <string name="edit_time_tags_hint">選んだ時間帯は、おすすめで先に並びます。</string>
+    <string name="tag_morning">朝</string>
+    <string name="tag_day">昼</string>
+    <string name="tag_night">夜</string>
+    <string name="edit_daily_limit">ガチャでの1日の上限 %1$d回</string>
+    <string name="edit_apps">対象アプリ</string>
+    <string name="edit_apps_none">選んでいません</string>
+    <string name="edit_enabled">抽選に入れる</string>
+    <string name="edit_saved">保存しました</string>
+    <string name="edit_saved_wait">保存しました。一部の変更は10分後に反映します。</string>
+    <string name="edit_discard_title">変更を破棄しますか？</string>
+    <string name="edit_discard">破棄</string>
+    <string name="edit_delete_task">10分後に削除します。待っている間は、設定の上部から取り消せます。</string>
+    <string name="edit_delete_reward">すぐに削除します。対象アプリのロックが外れるのは10分後です。</string>
+    <string name="apps_title">対象アプリ</string>
+    <string name="apps_empty">選べるアプリが見つかりません</string>
+    <string name="apps_empty_body">電話・SMS・ホーム・端末の設定・キーボードは選べません。ほかのアプリを入れると、ここに並びます。</string>
+    <string name="apps_messaging_warning">ロック中は連絡を受け取れても開けません</string>
+    <string name="apps_choose">選ぶ</string>
+
+    <!-- S07 ロック画面 -->
+    <string name="locked_title">%1$sはロック中です</string>
+    <string name="locked_body">このアプリはドパガキデトックスで報酬が出たときだけ使えます。やることを終えてコインを貯め、ガチャを回そう。</string>
+    <string name="locked_expired_title">%1$sの時間が終わりました</string>
+    <string name="locked_expired_body">ドパガキデトックスで、終わったことを報告してください。</string>
+    <string name="locked_paused_body">ご褒美ミッションを一時停止しているあいだは、%1$sも開けません。</string>
+    <string name="locked_coins">所持コイン %1$s</string>
+    <string name="locked_unlock_body">10分たつと、%1$sが30分だけ使えるようになります。そのあとは、またロックされます。</string>
+    <string name="locked_unlock_cancel">やめる</string>
+    <string name="locked_open_app">ドパガキデトックスを開く</string>
+    <string name="locked_force_unlock">強制解除（押してから10分後）</string>
+
+    <!-- S08 初回設定 -->
+    <string name="onboarding_step">%1$d / %2$d</string>
+    <string name="onboarding_eyebrow_single">はじめに</string>
+    <string name="disclosure_title">報酬アプリのロックに、ユーザー補助を使います</string>
+    <string name="disclosure_body">ご褒美に選んだゲームやSNSのアプリを開いたとき、上にロック画面を重ね、ご褒美の時間が終わったら端末のホーム画面に戻すために、Android のユーザー補助サービスを使います。</string>
+    <string name="disclosure_data">扱うデータ</string>
+    <string name="disclosure_item_package">使うのは、前面に表示されているアプリのパッケージ名だけです</string>
+    <string name="disclosure_item_no_content">画面に表示されている内容は読みません</string>
+    <string name="disclosure_item_no_send">ユーザー補助で得た情報は保存せず、端末の外に送りません</string>
+    <string name="disclosure_item_only_targets">ロックするのは、ご褒美の対象に選んだアプリだけです</string>
+    <string name="disclosure_item_off">端末の設定から、いつでもオフにできます</string>
+    <string name="disclosure_note">同意しなくても、報酬アプリのロックなしでこのアプリを使えます。あとから設定の『ユーザー補助の説明』で、この画面をもう一度表示できます。</string>
+    <string name="disclosure_agree">同意する</string>
+    <string name="disclosure_disagree">同意しない</string>
+    <string name="a11y_settings_title">端末の設定でオンにしてください</string>
+    <string name="a11y_settings_body">ユーザー補助の一覧から『ドパガキデトックスのアプリのロック』を選び、オンにしてください。一覧の場所は端末によって違い、『インストール済みのアプリ』の中にあることもあります。オンにできないときは、端末の設定の『アプリ』からドパガキデトックスを開き、右上のメニューの『制限付き設定を許可』を選んでから、もう一度試してください。</string>
+    <string name="a11y_settings_on">オンになりました。</string>
+    <string name="a11y_open_settings">設定を開く</string>
+    <string name="a11y_open_device_settings">端末の設定を開く</string>
+    <string name="notif_title">残り時間を通知で知らせます</string>
+    <string name="notif_body">ミッションの残り時間と終わり、解除待ちを通知に出します。許可しなくてもロックは動きます。通知が出ないだけです。</string>
+    <string name="notif_allow">通知を許可</string>
 </resources>

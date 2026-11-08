@@ -59,6 +59,9 @@ import kotlin.random.Random
 /** 10連の結果（選ぶまで残す。5.3）。 */
 data class GachaTenResult(val missionIds: List<String>, val drawnAt: Instant)
 
+/** ガチャの演出で見せる結果（メモリだけに持つ。アプリを閉じたら演出は飛ばして次の画面へ）。 */
+data class GachaReveal(val missions: List<Mission>, val usedPity: Boolean, val ten: Boolean)
+
 /** ユーザー補助がオフだった時間（6.4）。 */
 data class OffInterval(val startedAt: Instant, val endedAt: Instant?)
 
@@ -79,6 +82,8 @@ data class AppState(
     val accessibilityOff: List<OffInterval> = emptyList(),
     /** 直前に終わったセッションの内訳（完了報告の結果表示。S06）。表示したら消す。 */
     val settlement: Settlement? = null,
+    /** ガチャの演出の途中（S03）。 */
+    val reveal: GachaReveal? = null,
 ) {
     fun mission(id: String): Mission? = missions.firstOrNull { it.id == id }
 
@@ -263,8 +268,8 @@ class DetoxStore(
                 s = removeMission(s, p.missionId).replacePending(done)
             }
             PendingPayload.ResetData -> {
-                // 実行中はリセットしない（ロックを抜ける道にしない）。終わるまで待つ
-                if (s.running != null) return s
+                // 実行中・10連の結果を選ぶ前はリセットしない（ロックを抜ける道にしない）。終わるまで待つ
+                if (s.running != null || s.gachaTen != null) return s
                 s = resetLocked(s.replacePending(done))
             }
         }
@@ -345,6 +350,7 @@ class DetoxStore(
     suspend fun start(missionId: String, source: SessionSource): StartCheck = mutex.withLock {
         val s = _state.value
         val m = s.mission(missionId) ?: return StartCheck.Disabled
+        if (s.gachaTen != null) return StartCheck.AlreadyRunning
         val check = SessionRules.checkStart(m, source, s.wallet, s.settings, clock.now(), zone(), today(s), s.running, s.previous?.kind)
         if (check !is StartCheck.Ok) return check
         val next = startLocked(s, m, source)
@@ -384,12 +390,12 @@ class DetoxStore(
         if (ten) {
             val result = GachaTenResult(draw.missions.map { it.id }, clock.now())
             runtime.upsertGachaTen(GachaTenEntity(0, result.missionIds.joinToString("\n"), result.drawnAt.toEpochMilli()))
-            _state.value = next.copy(gachaTen = result)
+            _state.value = next.copy(gachaTen = result, reveal = GachaReveal(draw.missions, draw.usedPity, ten = true))
             GachaOutcome.Ten(draw.missions, draw.usedPity)
         } else {
             val m = draw.missions.single()
             next = startLocked(next, m, SessionSource.GACHA_SINGLE)
-            _state.value = next
+            _state.value = next.copy(reveal = GachaReveal(listOf(m), draw.usedPity, ten = false))
             GachaOutcome.Single(m, draw.usedPity)
         }
     }
@@ -400,8 +406,9 @@ class DetoxStore(
         val ten = s.gachaTen ?: return false
         if (s.running != null) return false
         val m = ten.missionIds.getOrNull(index)?.let { s.mission(it) } ?: return false
-        // 静かな時間帯は、10連の結果のご褒美も選べない（7.3）
-        if (pickCheck(s, m) !is StartCheck.Ok) return false
+        // 静かな時間帯は、10連の結果のご褒美も選べない（7.3）。ただし選べるものが1つもなければ、出られなくならないよう選ばせる
+        val anyPickable = ten.missionIds.mapNotNull { s.mission(it) }.any { pickCheck(s, it) is StartCheck.Ok }
+        if (anyPickable && pickCheck(s, m) !is StartCheck.Ok) return false
         runtime.deleteGachaTen()
         _state.value = startLocked(s.copy(gachaTen = null), m, SessionSource.GACHA_TEN)
         true
@@ -459,6 +466,8 @@ class DetoxStore(
     suspend fun cancelPending(id: String) = mutex.withLock {
         val s = _state.value
         val c = s.pending.firstOrNull { it.id == id && it.status == PendingStatus.WAITING } ?: return
+        // 消したご褒美の対象アプリのロックを外す待ちは取り消せない（取り消すと待たずにロックが外れるため。5.6）
+        if (!PendingChanges.isCancellable(c)) return
         val next = s.replacePending(PendingChanges.cancel(c))
         savePending(next.pending)
         _state.value = next
@@ -481,10 +490,12 @@ class DetoxStore(
     private suspend fun finishLocked(s: AppState, result: SessionResult, now: Instant): AppState {
         val r = s.running ?: return s
         val finished = SessionRules.finish(r, result, now)
-        val finishDay = DayClock.advance(s.day, now, zone()).current
+        // 報告が遅れても、終えた時刻は終了予定の時刻にする（4時をまたいで報告しても日付が変わらない。7.5、8章）
+        val doneAt = if (result == SessionResult.ABORTED) now else minOf(now, SessionRules.normalize(r, now).endsAt)
+        val finishDay = DayKey.of(doneAt, zone()).let { d -> s.day?.current?.let { if (d > it) it else d } ?: d }
         val settlement = SessionRules.settle(s.wallet, finished, finishDay)
         val missions = if (SessionRules.countsAsDone(result)) {
-            s.missions.map { if (it.id == r.missionId) it.copy(lastDoneAt = now) else it }
+            s.missions.map { if (it.id == r.missionId) it.copy(lastDoneAt = doneAt) else it }
         } else s.missions
         main.insertSession(SessionEntity(finished.id, SessionColumns.from(finished)))
         runtime.deleteRunning()
@@ -497,6 +508,10 @@ class DetoxStore(
             missions = missions,
             settlement = settlement,
         )
+    }
+
+    fun acknowledgeReveal() {
+        _state.value = _state.value.copy(reveal = null)
     }
 
     fun acknowledgeSettlement() {
@@ -600,7 +615,8 @@ class DetoxStore(
 
     fun decideApp(packageName: String, excluded: Set<String>): AppLockDecision {
         val s = _state.value
-        if (!s.loaded) return AppLockDecision.NOT_TARGET
+        // ユーザー補助の利用に同意していなければロックしない（9.2：同意してから使う）
+        if (!s.loaded || s.meta.a11yConsent != true) return AppLockDecision.NOT_TARGET
         val now = clock.now()
         return AppLockPolicy.decide(
             packageName, now, s.settings, s.missions, excluded, s.running,
