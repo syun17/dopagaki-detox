@@ -93,8 +93,19 @@ object Rules {
     val REWARD_DURATION_MIN_RANGE = 5..60
     val WEIGHT_RANGE = 1..5
 
-    /** ご褒美のガチャでの1日上限の初期値。7.3 */
+    /** ご褒美のガチャでの1日上限の初期値と範囲。5.5、7.3 */
     const val REWARD_DAILY_LIMIT_DEFAULT = 2
+    val REWARD_DAILY_LIMIT_RANGE = 1..10
+
+    /** プリセットの出やすさ。8章「プリセット」 */
+    const val PRESET_WEIGHT = 3
+
+    /** 時間帯タグの始まりの時（朝は1日の切り替えと同じ4時、昼11時、夜18時）。8章 Mission.timeTags */
+    const val TIME_TAG_DAY_START_HOUR = 11
+    const val TIME_TAG_NIGHT_START_HOUR = 18
+
+    /** 1日の切り替えの最小間隔（前回から20時間以上あける）。6.4 */
+    val DAY_SWITCH_MIN_INTERVAL: Duration = Duration.ofHours(20)
 
     /** ご褒美ミッションの終了を知らせる、終了前の時間。6.2 */
     val REWARD_END_NOTICE_BEFORE: Duration = Duration.ofMinutes(1)
