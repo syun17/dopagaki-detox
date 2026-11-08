@@ -73,7 +73,7 @@ object Rules {
     /** 1回の更新で出すおすすめの件数（ホーム・スワイプ）。5.1、5.2、7.4 */
     const val FEED_SIZE = 20
 
-    /** 重み w = p × (1 + DAY_FACTOR × min(d, DAYS_CAP)) × c。7.2 */
+    /** 重み w = p × (1 + DAY_FACTOR × min(d, DAYS_CAP)) × c。一度も実施していなければ d = DAYS_CAP。7.2 */
     const val WEIGHT_DAY_FACTOR = 0.1
     const val WEIGHT_DAYS_CAP = 7
 
@@ -107,17 +107,32 @@ object Rules {
 }
 
 /**
- * 設定（8章 Settings）の初期値のうち、設計書で値が決まっているもの。
- * 常時ロック・強制解除・一時停止の可否の初期値は設計書で未定のため、ここには置かない。
+ * 設定（8章 Settings）の初期値。
+ * UNLOCK_WAIT・UNLOCK_GRACE・HOME_REWARD_RATIO・REFRESH_LIMIT・REFRESH_WINDOW・DAY_START_HOUR は MVP では固定（5.5）。
  */
 object SettingsDefaults {
+    /** 報酬アプリの常時ロック（rewardAppLock）。初回設定で同意したあとオンにできる。8章 */
+    const val REWARD_APP_LOCK = false
+
+    /** 強制解除の可否（allowForceUnlock）。8章 */
+    const val ALLOW_FORCE_UNLOCK = true
+
+    /** 一時停止の可否（allowPause）。8章 */
+    const val ALLOW_PAUSE = true
+
+    /** 静かな時間帯のオン・オフ（quietEnabled）。7.3、8章 */
+    const val QUIET_ENABLED = true
+
+    /** 1日の健全行動時間の目標（dailyGoalMin、分）。5.5、8章 */
+    const val DAILY_GOAL_MIN = 30
+
     /** 強制解除・有利な設定変更の待ち時間（unlockWaitMin）。5.6、6.3 */
     val UNLOCK_WAIT: Duration = Duration.ofMinutes(10)
 
     /** 常時ロックを強制解除したあと対象アプリを開けておく時間（unlockGraceMin）。6.3 */
     val UNLOCK_GRACE: Duration = Duration.ofMinutes(30)
 
-    /** 静かな時間帯（quietStart〜quietEnd）。日をまたぐ。7.3 */
+    /** 静かな時間帯（quietStart〜quietEnd）。開始を含み終了を含まない。日をまたぐ。7.3 */
     val QUIET_START: LocalTime = LocalTime.of(23, 0)
     val QUIET_END: LocalTime = LocalTime.of(6, 0)
 

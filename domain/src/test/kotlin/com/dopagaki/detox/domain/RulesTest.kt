@@ -91,6 +91,11 @@ class RulesTest {
         assertEquals(3, SettingsDefaults.REFRESH_LIMIT)
         assertEquals(Duration.ofMinutes(60), SettingsDefaults.REFRESH_WINDOW)
         assertEquals(4, SettingsDefaults.DAY_START_HOUR)
+        assertEquals(false, SettingsDefaults.REWARD_APP_LOCK)
+        assertEquals(true, SettingsDefaults.ALLOW_FORCE_UNLOCK)
+        assertEquals(true, SettingsDefaults.ALLOW_PAUSE)
+        assertEquals(true, SettingsDefaults.QUIET_ENABLED)
+        assertEquals(30, SettingsDefaults.DAILY_GOAL_MIN)
     }
 
     @Test

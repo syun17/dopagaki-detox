@@ -24,7 +24,7 @@ SNS やゲームを開く「手グセ」を、ショート動画風スワイプ�
 | 7.1〜7.3 | 抽選：レア度の出現率と倍率、重み、補正ルール、天井、枠が空のとき |
 | 7.4 | ホーム・スワイプでのご褒美と更新回数（1時間に3回） |
 | 7.5 | コイン（増える・減る、例、ガチャの価格の決め方） |
-| 8 | データ設計（Mission、Session、LaterItem、Wallet、Settings、定数、PendingChange、ClockAnchor） |
+| 8 | データ設計（Mission、Session、LaterItem、Wallet、Settings、初回の記録、プリセット、定数、PendingChange、ClockAnchor） |
 | 9.1〜9.5 | 技術構成、権限と Play の申告、常時ロックの実装、タイマーと画面、成功指標の計測 |
 | 10 | 健全性への配慮とリスク |
 | 11 | ロードマップ、未決事項 |
@@ -46,7 +46,7 @@ SNS やゲームを開く「手グセ」を、ショート動画風スワイプ�
 | おすすめフィード、更新 | `Feed`、`Refresh`（`refreshTimes`） |
 | 10分待ち（有利な設定変更・強制解除） | `PendingChange` |
 | 強制解除、一時停止 | `ForceUnlock`、`Pause` |
-| 静かな時間帯 | `QuietHours`（`quietStart`・`quietEnd`） |
+| 静かな時間帯 | `QuietHours`（`quietEnabled`・`quietStart`・`quietEnd`） |
 | 報酬アプリの常時ロック、対象アプリ | `RewardAppLock`、`linkedApps` |
 | 完了報告の結果 | `Session.result`：running, done（できた）, partial（一部）, failed（できなかった）, aborted（強制解除） |
 | 確定した場所 | `Session.source`：home, swipe, later, gacha_single, gacha_ten |

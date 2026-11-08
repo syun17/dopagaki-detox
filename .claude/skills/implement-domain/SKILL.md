@@ -54,20 +54,20 @@ argument-hint: "<対象 例: coin, lottery, pity, refresh, trusted-clock, day-ke
 - フィード：重複なしで20件。候補が20件未満なら候補数まで。時間帯タグ（朝・昼・夜）が合うものが先。ご褒美の出現率はガチャの 1/10
 - 「あとで」に保存したものはホームの先頭
 
-### 設計書で未定の点（該当する実装の前に AskUserQuestion で聞き、/update-spec で設計書に書く）
-- 8章 Settings の unlockWaitMin・unlockGraceMin・homeRewardRatio・refreshLimit・refreshWindowMin・dayStartHour を利用者が変えられるか。変えられるなら 5.6 の表でどちらの向きを10分待ちにするか（推奨：MVP では固定）
-- 静かな時間帯のオン・オフの持ち方（8章に項目がない）と初期値（推奨：`quietEnabled` を足し初期値オン）
-- 静かな時間帯の境界（推奨：23:00 を含み 6:00 を含まない）と、判定する時点（抽選のときか、始めるときか）
-- 一度も実施していないミッション（lastDoneAt が null）の重みの d（推奨：上限の 7）
-- 7.4 の「SRのうちご褒美 6%」の意味と、ホーム・スワイプで ÷10 にする方法（推奨：ガチャと同じ方法で抽選し、ご褒美が出たら確率 0.9 でやることから引き直す）
-- 8章 Settings の rewardAppLock・allowForceUnlock・allowPause・dailyGoalMin の初期値
+### 決定済み（2026-11-08、設計書 5.5・5.6・7.2〜7.4・8章）
+- unlockWaitMin・unlockGraceMin・homeRewardRatio・refreshLimit・refreshWindowMin・dayStartHour は MVP では固定
+- 静かな時間帯：quietEnabled（初期オン）。23:00 を含み 6:00 を含まない。判定は抽選のときと「始める」ときの両方（あとで・フィードに残ったご褒美も静かな時間帯は始められない）
+- lastDoneAt が null のミッションの d は 7
+- ホーム・スワイプ：ガチャと同じ方法で抽選し、ご褒美が出たら確率 0.9（1 − homeRewardRatio）でやることだけから引き直す
+- 初期値：rewardAppLock＝オフ、allowForceUnlock＝オン、allowPause＝オン、dailyGoalMin＝30
+- データのリセットは10分待ち。初回ボーナスは再付与しない（firstLaunchBonusGiven はリセットで消さない）
 
 ### 天井（7.3）
 - 15分以上のやることを「できた」で5回続けると、次のガチャ（単発・10連）がご褒美確定。10連では少なくとも1件がご褒美
 - 一部できた・できなかった・強制解除 → カウント0
 - ご褒美ミッション → 数えず、0にも戻さない
 - 上限到達・静かな時間帯でご褒美を出せないとき → 天井を使わず持ち越す（pityReady のまま）
-- 未定：15分未満のやることを「できた」で終えたとき（数えないが0にも戻さない、と読める）と、15分未満の「一部できた」でリセットするか → 実装前に利用者に確認する
+- 15分未満のやることは結果に関係なく数えず、0 にも戻さない（14分の「できなかった」→ カウントそのまま）
 
 ### 更新回数（7.4）
 - ホームの引っ張って更新とスワイプの次の20枚を合わせて、直近60分に3回まで
