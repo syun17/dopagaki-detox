@@ -1,6 +1,11 @@
 package com.dopagaki.detox.navigation
 
+import android.content.ActivityNotFoundException
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Intent
+import androidx.core.net.toUri
+import android.os.Build
 import android.provider.Settings as AndroidSettings
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -10,8 +15,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -244,12 +252,36 @@ private fun MainTabs(container: AppContainer, appVm: AppViewModel) {
     val settingsVm: SettingsViewModel = viewModel(factory = containerFactory { SettingsViewModel(container) })
     val showBar = Tab.entries.any { it.route == route }
     fun message(text: String) { scope.launch { snackbar.showSnackbar(text) } }
+    val policyUrl = stringResource(R.string.privacy_policy_url)
+    val policyFailed = stringResource(R.string.privacy_policy_open_failed)
+    val copyUrl = stringResource(R.string.copy_url)
+    val urlCopied = stringResource(R.string.url_copied)
+    val versionName = remember { context.packageManager.getPackageInfo(context.packageName, 0).versionName.orEmpty() }
+
+    // プライバシーポリシーは端末のブラウザで開く（アプリは INTERNET を持たない）。
+    // resolveActivity は <queries> がないと null を返すので使わず、開けなかったら Snackbar で URL のコピーを勧める
+    fun openPrivacyPolicy() {
+        try {
+            context.startActivity(Intent(Intent.ACTION_VIEW, policyUrl.toUri()).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        } catch (_: ActivityNotFoundException) {
+            scope.launch {
+                val r = snackbar.showSnackbar(policyFailed, actionLabel = copyUrl, duration = SnackbarDuration.Long)
+                if (r == SnackbarResult.ActionPerformed) {
+                    context.getSystemService(ClipboardManager::class.java)
+                        ?.setPrimaryClip(ClipData.newPlainText(copyUrl, policyUrl))
+                    // Android 13 以降は端末がコピーを知らせるので、それより前だけ知らせる
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) snackbar.showSnackbar(urlCopied)
+                }
+            }
+        }
+    }
 
 
     Scaffold(
         // 上のインセットは各画面（トップアプリバー、スワイプの背景）が処理する。下はナビゲーションバーが処理する
         contentWindowInsets = WindowInsets(0),
-        snackbarHost = { SnackbarHost(snackbar) },
+        // アクションつき（今はプライバシーポリシーの「URLをコピー」だけ）は、文が長いのでアクションを下の行に出す
+        snackbarHost = { SnackbarHost(snackbar) { data -> Snackbar(data, actionOnNewLine = data.visuals.actionLabel != null) } },
         bottomBar = {
             if (showBar) {
                 NavigationBar(containerColor = MaterialTheme.colorScheme.surfaceContainer) {
@@ -323,6 +355,8 @@ private fun MainTabs(container: AppContainer, appVm: AppViewModel) {
                                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
                         )
                     },
+                    onOpenPrivacyPolicy = ::openPrivacyPolicy,
+                    versionName = versionName,
                     onMessage = ::message,
                     contentPadding = inner,
                 )

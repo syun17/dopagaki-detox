@@ -15,8 +15,12 @@ import java.time.LocalTime
 private val Context.settingsStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 private val Context.metaStore: DataStore<Preferences> by preferencesDataStore(name = "meta")
 
+/** バックアップする記録（初回起動ボーナスを付けたか）。meta は端末ごとに取り直すのでバックアップから外している（9.4） */
+private val Context.recordsStore: DataStore<Preferences> by preferencesDataStore(name = "records")
+
 /**
  * リセットしても消さない記録（設計書 5.6、8章「初回の記録」）。
+ * firstLaunchBonusGiven は records に保存してバックアップする。onboardingDone と a11yConsent は meta に保存し、バックアップしない（9.2、9.4）。
  * a11yConsent：初回設定（S08）でユーザー補助の利用に同意したか（null は未回答）。
  */
 data class Meta(
@@ -71,16 +75,25 @@ class PrefsStore(private val context: Context) {
 
     suspend fun loadMeta(): Meta {
         val p = context.metaStore.data.first()
+        val records = context.recordsStore.data.first()
         return Meta(
-            firstLaunchBonusGiven = p[K.firstLaunchBonusGiven] ?: false,
+            // 以前の版は meta に保存していたので、records になければ meta を見る
+            firstLaunchBonusGiven = records[K.firstLaunchBonusGiven] ?: p[K.firstLaunchBonusGiven] ?: false,
             onboardingDone = p[K.onboardingDone] ?: false,
             a11yConsent = p[K.a11yConsent]?.toBooleanStrictOrNull(),
         )
     }
 
+    /** 初回ボーナスの記録がバックアップする保存先（records）にあるか。 */
+    suspend fun isBonusRecordBackedUp(): Boolean = context.recordsStore.data.first()[K.firstLaunchBonusGiven] == true
+
     suspend fun saveMeta(m: Meta) {
+        // 付けたかの記録は true から false に戻さない（読み込む前の Meta() で呼ばれても消えないように）
+        if (m.firstLaunchBonusGiven) {
+            context.recordsStore.edit { p -> p[K.firstLaunchBonusGiven] = true }
+        }
         context.metaStore.edit { p ->
-            p[K.firstLaunchBonusGiven] = m.firstLaunchBonusGiven
+            if (m.firstLaunchBonusGiven) p.remove(K.firstLaunchBonusGiven)
             p[K.onboardingDone] = m.onboardingDone
             if (m.a11yConsent == null) p.remove(K.a11yConsent) else p[K.a11yConsent] = m.a11yConsent.toString()
         }

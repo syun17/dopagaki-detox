@@ -156,18 +156,24 @@ class DetoxStore(
         var wallet = walletEntity?.toWallet() ?: Wallet()
         var day = walletEntity?.toDayState()
         val now = clock.now()
-        if (!meta.firstLaunchBonusGiven) {
+        // 記録を分ける前のバックアップから戻したとき（コインは戻り、記録はない）は、付けたものとみなす（8章、9.4）
+        val bonusGiven = Coins.firstLaunchBonusAlreadyGiven(recorded = meta.firstLaunchBonusGiven, hasSavedWallet = walletEntity != null)
+        if (!bonusGiven) {
             // 初回起動：プリセットと初回ボーナス（7.5、8章）
             if (missions.isEmpty()) {
                 missions = Presets.missions(newId)
                 main.replaceMissions(missions.mapIndexed { i, m -> MissionEntity.from(m, i) })
             }
             wallet = Coins.applyFirstLaunchBonus(wallet, alreadyGiven = false)
+        }
+        day = DayClock.advance(day, now, zone())
+        // コインを先に保存してから記録を書く。間で落ちても、次はコインの記録があるので付け直さず、ボーナスも消えない
+        main.upsertWallet(WalletEntity.from(wallet, day))
+        if (!meta.firstLaunchBonusGiven || !prefs.isBonusRecordBackedUp()) {
+            // 初回、復元、以前の版（meta にだけ記録がある）からの更新のとき、バックアップする保存先に記録を書く
             meta = meta.copy(firstLaunchBonusGiven = true)
             prefs.saveMeta(meta)
         }
-        day = DayClock.advance(day, now, zone())
-        main.upsertWallet(WalletEntity.from(wallet, day))
 
         val ten = runtime.gachaTen()
         var s = AppState(

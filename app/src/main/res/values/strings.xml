@@ -241,7 +241,16 @@
     <string name="settings_backup_support">端末の自動バックアップで、ミッションと記録を保存します。実行中のミッションと反映待ちの変更は保存しません。</string>
     <string name="settings_reset">データをリセット</string>
     <string name="settings_reset_support">ミッション・履歴・コイン・設定を初めの状態に戻します。押してから10分後に反映します。</string>
+    <string name="settings_about_section">このアプリについて</string>
     <string name="settings_help">ヘルプ</string>
+    <string name="settings_privacy_policy">プライバシーポリシー</string>
+    <string name="settings_open_in_browser">ブラウザで開く</string>
+    <string name="settings_version">バージョン</string>
+    <!-- 公開ページ（docs/privacy-policy/index.html を公開したもの）。公開先を変えたら Play Console の登録も直す -->
+    <string name="privacy_policy_url" translatable="false">https://syun17.com/dopagaki-detox/privacy-policy/</string>
+    <string name="privacy_policy_open_failed">ブラウザが見つからないため開けませんでした。ブラウザのアプリを入れるか有効にしてから、もう一度お試しください。</string>
+    <string name="copy_url">URLをコピー</string>
+    <string name="url_copied">URLをコピーしました</string>
     <string name="help_body">ゲームやSNSの利用で日常生活に大きな支障が出ている場合は、アプリだけに頼らず、医療機関や相談窓口の利用も選択肢です。このアプリは習慣づくりを支えるためのもので、治療を目的としたものではありません。</string>
     <string name="reset_title">データをリセットしますか？</string>
     <string name="reset_body">10分後に、ミッション・履歴・コイン・設定が初めの状態に戻ります。初回ボーナスはもう一度はもらえません。待っている間は、設定の上部から取り消せます。</string>

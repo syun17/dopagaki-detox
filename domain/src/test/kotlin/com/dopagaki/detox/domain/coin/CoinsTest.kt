@@ -70,4 +70,17 @@ class CoinsTest {
         assertEquals(3_000, Coins.applyFirstLaunchBonus(Wallet(), alreadyGiven = false).coins)
         assertEquals(0, Coins.applyFirstLaunchBonus(Wallet(), alreadyGiven = true).coins)
     }
+
+    @Test fun `初回起動ボーナスは記録もコインの記録もないときだけ付ける`() {
+        assertEquals(false, Coins.firstLaunchBonusAlreadyGiven(recorded = false, hasSavedWallet = false))
+        assertEquals(true, Coins.firstLaunchBonusAlreadyGiven(recorded = true, hasSavedWallet = false))
+        assertEquals(true, Coins.firstLaunchBonusAlreadyGiven(recorded = true, hasSavedWallet = true))
+    }
+
+    @Test fun `記録がなくてもコインの記録があれば付けない（記録を分ける前のバックアップから戻したとき）`() {
+        assertEquals(true, Coins.firstLaunchBonusAlreadyGiven(recorded = false, hasSavedWallet = true))
+        val restored = Wallet(coins = 1_200)
+        val given = Coins.firstLaunchBonusAlreadyGiven(recorded = false, hasSavedWallet = true)
+        assertEquals(1_200, Coins.applyFirstLaunchBonus(restored, alreadyGiven = given).coins)
+    }
 }
