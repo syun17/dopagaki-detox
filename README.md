@@ -101,6 +101,10 @@ APK を端末にコピーしてファイルアプリから開いても入れら�
 
 `INTERNET`、`QUERY_ALL_PACKAGES`、`SYSTEM_ALERT_WINDOW`、フォアグラウンドサービスは使いません。詳しくは[設計書 9.2](設計書.md#92-権限と申告必須)と[9.3](設計書.md#93-常時ロックの実装必須事項)にあります。
 
+## プライバシーポリシー
+
+[docs/privacy-policy/index.html](docs/privacy-policy/index.html) にあります。Google Play のストア掲載情報に登録する公開ページで、アプリの設定画面からも開きます。データの扱い・権限・ユーザー補助の使い方を変えたら、このページと Play Console のデータセーフティも一緒に直します。
+
 ## ディレクトリ構成
 
 ```
@@ -115,7 +119,7 @@ app/        Android アプリ（Jetpack Compose＋Material 3）
     time/          信頼時刻の Android 実装
     lock/          ユーザー補助サービスとロック画面
     notification/  通知・アラーム・再起動後の復元
-docs/       design-system.md（UI の決まり）
+docs/       design-system.md（UI の決まり）、privacy-policy/（プライバシーポリシーの公開ページ）
 mockups/    画面の見た目の参考（HTML）
 .claude/    Claude Code のエージェントと skill
 ```

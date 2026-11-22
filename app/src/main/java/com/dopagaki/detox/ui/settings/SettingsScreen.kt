@@ -75,6 +75,8 @@ fun SettingsScreen(
     onEditMission: (id: String?, kind: MissionKind) -> Unit,
     onOpenDisclosure: () -> Unit,
     onOpenNotificationSettings: () -> Unit,
+    onOpenPrivacyPolicy: () -> Unit,
+    versionName: String,
     onMessage: (String) -> Unit,
     contentPadding: PaddingValues,
 ) {
@@ -268,12 +270,25 @@ fun SettingsScreen(
                     modifier = Modifier.clickable { dialog = "reset" },
                 )
             }
-            item { Divider() }
+            // このアプリについて（ヘルプ・プライバシーポリシー・バージョン）。アプリの外に出る行だけ末尾に ic_open_in_new
+            item { Divider(); SectionHeader(stringResource(R.string.settings_about_section)) }
             item {
                 ListItem(
                     headlineContent = { Text(stringResource(R.string.settings_help)) },
-                    leadingContent = { Icon(painterResource(R.drawable.ic_help), null) },
                     modifier = Modifier.clickable { dialog = "help" },
+                )
+            }
+            item {
+                ListItem(
+                    headlineContent = { Text(stringResource(R.string.settings_privacy_policy)) },
+                    trailingContent = { Icon(painterResource(R.drawable.ic_open_in_new), null) },
+                    modifier = Modifier.clickable(onClickLabel = stringResource(R.string.settings_open_in_browser), onClick = onOpenPrivacyPolicy),
+                )
+            }
+            item {
+                ListItem(
+                    headlineContent = { Text(stringResource(R.string.settings_version)) },
+                    supportingContent = { Text(versionName, color = DetoxTheme.colors.textSecondary) },
                 )
             }
         }

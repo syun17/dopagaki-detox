@@ -50,6 +50,13 @@ object Coins {
         return wallet.copy(streakDays = streak, lastActiveDay = today, coins = wallet.coins + bonus) to bonus
     }
 
+    /**
+     * 初回起動ボーナスをもう付けたか（8章「初回の記録」）。
+     * 記録がなくても、コインの記録（Wallet）が保存済みなら付けたものとみなす。
+     * 記録を分ける前のバックアップから戻した端末で、戻したコインにもう一度足さないため（9.4）。
+     */
+    fun firstLaunchBonusAlreadyGiven(recorded: Boolean, hasSavedWallet: Boolean): Boolean = recorded || hasSavedWallet
+
     /** 初回起動ボーナス。すでに付けていれば何もしない。 */
     fun applyFirstLaunchBonus(wallet: Wallet, alreadyGiven: Boolean): Wallet =
         if (alreadyGiven) wallet else wallet.copy(coins = wallet.coins + Rules.FIRST_LAUNCH_BONUS)
