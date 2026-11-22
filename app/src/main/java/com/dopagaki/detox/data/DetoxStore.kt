@@ -456,7 +456,9 @@ class DetoxStore(
     /** 常時ロックの強制解除を押す（6.3）。 */
     suspend fun requestAppLockUnlock() = mutex.withLock {
         val s = _state.value
-        if (s.appLockUnlock != null) return
+        if (s.appLockUnlock != null || !s.settings.allowForceUnlock) return
+        // 解除後の30分のあいだは新しい待ちを作らない（6.3）
+        if (PendingChanges.appLockGraceUntil(s.pending, clock.now()) != null) return
         val change = PendingChanges.request(newId(), PendingPayload.ForceUnlockAppLock, clock.now())
         val next = s.copy(pending = s.pending + change)
         savePending(next.pending)

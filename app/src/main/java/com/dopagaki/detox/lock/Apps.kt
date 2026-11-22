@@ -11,6 +11,7 @@ import android.telecom.TelecomManager
 import android.view.accessibility.AccessibilityManager
 import android.view.inputmethod.InputMethodManager
 import android.accessibilityservice.AccessibilityServiceInfo
+import com.dopagaki.detox.domain.lock.HomeEventRule
 
 /** 対象アプリを選ぶ一覧の1行。 */
 data class InstalledApp(val packageName: String, val label: String, val isMessaging: Boolean)
@@ -33,19 +34,28 @@ object Apps {
         "com.microsoft.office.outlook", "com.skype.raider", "com.google.android.apps.dynamite",
     )
 
-    fun excluded(context: Context): Set<String> {
-        val pm = context.packageManager
-        val result = mutableSetOf(context.packageName, SYSTEM_UI)
+    fun excluded(context: Context): Set<String> =
+        nonHomeExcluded(context) + SYSTEM_UI + homeCapablePackages(context) + imePackages(context)
+
+    /** 除外アプリのうち、ホームのイベントとして扱ってはいけないもの：自分自身、既定の電話・SMS、端末の設定（9.3）。 */
+    fun nonHomeExcluded(context: Context): Set<String> {
+        val result = mutableSetOf(context.packageName)
         context.getSystemService(TelecomManager::class.java)?.defaultDialerPackage?.let(result::add)
         Telephony.Sms.getDefaultSmsPackage(context)?.let(result::add)
-        // 既定のホームが決まっていない端末もあるので、ホームになれるアプリをすべて除外する
-        pm.queryIntentActivities(Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME), 0)
-            .forEach { result += it.activityInfo.packageName }
-        result -= "android"
-        resolvePackage(pm, Intent(Settings.ACTION_SETTINGS))?.let(result::add)
-        result += imePackages(context)
+        resolvePackage(context.packageManager, Intent(Settings.ACTION_SETTINGS))?.let(result::add)
         return result
     }
+
+    /** ホームになれるアプリ（既定のホームが決まっていない端末もあるので、なれるものをすべて）。設定アプリも含みうる。 */
+    private fun homeCapablePackages(context: Context): Set<String> =
+        context.packageManager.queryIntentActivities(Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_HOME), 0)
+            .map { it.activityInfo.packageName }
+            .filter { it != "android" }
+            .toSet()
+
+    /** ホームのイベントとして扱うパッケージ（6.2、9.3）。 */
+    fun homePackages(context: Context): Set<String> =
+        HomeEventRule.homes(homeCapablePackages(context), nonHomeExcluded(context))
 
     fun imePackages(context: Context): Set<String> =
         context.getSystemService(InputMethodManager::class.java)?.enabledInputMethodList
