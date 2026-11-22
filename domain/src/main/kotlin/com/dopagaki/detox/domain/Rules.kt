@@ -4,7 +4,7 @@ import java.time.Duration
 import java.time.LocalTime
 
 /**
- * 設計書 8章「定数（MVPでは設定画面に出さない）」と、7章・5.4 の数値。
+ * 設計書 8章「定数」「時間の定数」（MVPでは設定画面に出さない）と、7章・5.4 の数値。
  * 値の正本は設計書。ここを変えるときは先に設計書を直す（/update-spec）。
  * 出現率・倍率・コイン・時間をほかの場所に直書きしない。
  */
@@ -119,8 +119,11 @@ object Rules {
     /** 信頼時刻と起動回数・elapsedRealtime を保存する間隔（操作のたびにも保存する）。6.4 */
     val TRUSTED_CLOCK_SAVE_INTERVAL: Duration = Duration.ofMinutes(1)
 
-    /** 対象アプリが前面にある間、ご褒美の時間切れを判定する間隔。9.3 */
+    /** 対象アプリが前面にある間、ご褒美の時間切れを判定する間隔。ロック画面を出している間の判定し直しにも使う。9.3 */
     val REWARD_EXPIRY_CHECK_INTERVAL: Duration = Duration.ofSeconds(1)
+
+    /** 時間切れでホームに戻したあと、ロック画面を見せておく時間。6.2 */
+    val EXPIRED_LOCK_SHOW: Duration = Duration.ofSeconds(3)
 }
 
 /**
